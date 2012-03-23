@@ -1,0 +1,34 @@
+
+cgAutoCast is a decorator that will automatically type cast basic python types from arguments(strings) from the command line
+
+
+::Usage::
+
+First make your functions callable from the command line by placing this at bottom of module:
+
+    if __name__ == "__main__":
+        import sys
+        assert sys.argv[1] in globals(), "Need name of fxn to run from command line!"
+        fxnToRun = globals()[sys.argv[1]] 
+        fxnToRun(*sys.argv[2:])
+
+Now any function can be callable from the command line:
+    
+    python name_of_fxn arg1 arg2
+
+
+Second, decorate your function with the autocast fxn:
+
+    from cgAutoCast import autocast
+
+    @autocast
+    def important_fxn_name(numFoos, listOfFoos):
+        
+        cureForCancer = quickCancerCure(numFoos, listOfFoos)
+        print cureForCancer
+
+
+Values passed from the command line will automatically be type casted:
+
+    python cgAutoCast.py test 1,2,3 True    
+    [1, 2, 3] True <type 'list'> <type 'bool'>
