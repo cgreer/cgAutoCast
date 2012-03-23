@@ -1,4 +1,3 @@
-import bioLibCG
 
 def boolify(s):
 
