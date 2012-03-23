@@ -70,8 +70,6 @@ def test(one, two):
         
 if __name__ == "__main__":
     import sys
-
-    if sys.argv[1] == "help":
-            bioLibCG.gd(sys.argv[0])
-    else:
-            bioLibCG.submitArgs(globals()[sys.argv[1]], sys.argv[1:])
+    assert sys.argv[1] in globals(), "Need name of fxn to run from command line!"
+    fxnToRun = globals()[sys.argv[1]] 
+    fxnToRun(*sys.argv[2:])

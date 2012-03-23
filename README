@@ -13,8 +13,9 @@ First make your functions callable from the command line by placing this at bott
         fxnToRun(*sys.argv[2:])
 
 Now any function can be callable from the command line:
-    
-    python name_of_fxn arg1 arg2
+
+    #fxn name is first arg after module, arguments follow    
+    python name_of_module.py name_of_fxn arg1 arg2
 
 
 Second, decorate your function with the autocast fxn:
@@ -32,3 +33,18 @@ Values passed from the command line will automatically be type casted:
 
     python cgAutoCast.py test 1,2,3 True    
     [1, 2, 3] True <type 'list'> <type 'bool'>
+
+
+::TIP::
+
+Using grep def name_of_module.py will quickly show you fxns and arguments without opening the file:
+
+    >>>grep def cgAutoCast.py
+    def boolify(s):
+    def noneify(s):
+    def listify(s):
+    def estimateTypedValue(var):
+    def autocast(dFxn):
+        def wrapped(*c, **d):
+    def test(one, two):
+
