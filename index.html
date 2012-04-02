@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>cgAutoCast by sequenceGeek</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>cgAutoCast</h1>
+        <p>Auto Cast Arguments From Command Line</p>
+        <p class="view"><a href="https://github.com/sequenceGeek/cgAutoCast">View the Project on GitHub <small>sequenceGeek/cgAutoCast</small></a></p>
+        <ul>
+          <li><a href="https://github.com/sequenceGeek/cgAutoCast/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/sequenceGeek/cgAutoCast/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/sequenceGeek/cgAutoCast">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>cgAutoCast automatically type casts strings (usually from command line arguments) into basic python types</p>
+
+<h2>USAGE:</h2>
+
+<p><strong>FIRST, make your functions callable from the command line by placing this at bottom of module:</strong></p>
+
+<pre><code>if __name__ == "__main__":
+    import sys
+    assert sys.argv[1] in globals(), "Need name of fxn to run from command line!"
+    fxnToRun = globals()[sys.argv[1]] 
+    fxnToRun(*sys.argv[2:])
+</code></pre>
+
+<p><strong>Now any function can be callable from the command line:</strong></p>
+
+<pre><code>#fxn name is first arg after module, arguments follow    
+python name_of_module.py name_of_fxn arg1 arg2
+</code></pre>
+
+<p><strong>SECOND, decorate your function with the autocast fxn:</strong></p>
+
+<pre><code>from cgAutoCast import autocast
+
+@autocast
+def important_fxn_name(numFoos, listOfFoos):
+
+    cureForCancer = quickCancerCure(numFoos, listOfFoos)
+    print cureForCancer
+</code></pre>
+
+<p><strong>Values passed from the command line will automatically be type casted:</strong>
+(see cgAutoCast.py module test function)</p>
+
+<pre><code>python cgAutoCast.py test 1,2,3 True
+
+#output
+[1, 2, 3] True &lt;type 'list'&gt; &lt;type 'bool'&gt;
+</code></pre>
+
+<h2>TIP:</h2>
+
+<p>Using "grep def name_of_module.py" will quickly show you fxns and arguments without opening the file:</p>
+
+<pre><code>&gt;&gt;&gt;grep def cgAutoCast.py
+def boolify(s):
+def noneify(s):
+def listify(s):
+def estimateTypedValue(var):
+def autocast(dFxn):
+    def wrapped(*c, **d):
+def test(one, two):
+</code></pre>
+
+<h2>NOTE:</h2>
+
+<p>The decorator makes sane conversions but the user must be careful in ambiguous cases.  For e.g., when intending to use a number in a file name the number must be re-cast into a string.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/sequenceGeek">sequenceGeek</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
